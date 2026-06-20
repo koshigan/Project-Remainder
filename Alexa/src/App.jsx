@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
-  return(
-    <div>
-        <h1>Koshigan</h1>
-    </div>
-  );
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/")
+      .then(res => setData(res.data.message));
+  }, []);
+
+  return <h1>{data}</h1>;
 }
 
-export default App
+export default App;
