@@ -1,15 +1,29 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import Login from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
 
 function App() {
-  const [data, setData] = useState("");
+  const [page, setPage] = useState("login");
 
-  useEffect(() => {
-    axios.get("http://127.0.0.1:5000/")
-      .then(res => setData(res.data.message));
-  }, []);
+  return (
+    <>
+      {page === "login" && (
+        <Login
+          goToRegister={() => setPage("register")}
+          goToDashboard={() => setPage("dashboard")}
+        />
+      )}
 
-  return <h1>{data}</h1>;
+      {page === "register" && (
+        <Register
+          goToLogin={() => setPage("login")}
+        />
+      )}
+
+      {page === "dashboard" && <Dashboard />}
+    </>
+  );
 }
 
 export default App;
