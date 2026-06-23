@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function Register({ goToLogin }) {
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert("Registration Successful");
-    goToLogin();
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/register",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (res.data.success) {
+        alert("Registration Successful");
+        goToLogin();
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      alert("Server Error");
+    }
   };
 
   return (
@@ -32,8 +52,12 @@ export default function Register({ goToLogin }) {
         </h2>
 
         <input
-          type="text"
-          placeholder="Username"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
           required
           style={{
             width: "100%",
@@ -45,6 +69,10 @@ export default function Register({ goToLogin }) {
         <input
           type="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
           required
           style={{
             width: "100%",

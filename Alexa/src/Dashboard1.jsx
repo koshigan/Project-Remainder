@@ -1,10 +1,27 @@
 import React from "react";
+import axios from "axios";
 
 export default function Dashboard1({
   task,
   setTask,
   goBack,
 }) {
+  const handleSave = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/add-reminder",
+        task
+      );
+
+      if (res.data.success) {
+        alert("Reminder Saved");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Error Saving Reminder");
+    }
+  };
+
   const handleEdit = () => {
     const newTitle = prompt(
       "Edit Reminder",
@@ -149,6 +166,21 @@ export default function Dashboard1({
             ? "✅ Done"
             : "⏳ Pending"}
         </p>
+
+        <button
+          onClick={handleSave}
+          style={{
+            backgroundColor: "#2568cd",
+            color: "white",
+            border: "none",
+            padding: "10px 15px",
+            borderRadius: "5px",
+            marginRight: "10px",
+            cursor: "pointer",
+          }}
+        >
+          💾 Save
+        </button>
 
         <button
           onClick={handleEdit}

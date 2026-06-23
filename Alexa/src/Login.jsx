@@ -1,13 +1,38 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-export default function Login({ goToRegister, goToDashboard }) {
-  const [showPassword, setShowPassword] = useState(false);
+export default function Login({
+  goToRegister,
+  goToDashboard,
+}) {
+  const [showPassword, setShowPassword] =
+    useState(false);
 
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] =
+    useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert("Login Successful");
-    goToDashboard();
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (res.data.success) {
+        alert("Login Successful");
+        goToDashboard();
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      alert("Server Error");
+    }
   };
 
   return (
@@ -29,13 +54,22 @@ export default function Login({ goToRegister, goToDashboard }) {
           width: "300px",
         }}
       >
-        <h2 style={{ textAlign: "center", color: "#0066cc" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            color: "#0066cc",
+          }}
+        >
           Login
         </h2>
 
         <input
           type="email"
           placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
           required
           style={{
             width: "100%",
@@ -45,8 +79,14 @@ export default function Login({ goToRegister, goToDashboard }) {
         />
 
         <input
-          type={showPassword ? "text" : "password"}
+          type={
+            showPassword ? "text" : "password"
+          }
           placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
           required
           style={{
             width: "100%",
@@ -57,7 +97,9 @@ export default function Login({ goToRegister, goToDashboard }) {
 
         <button
           type="button"
-          onClick={() => setShowPassword(!showPassword)}
+          onClick={() =>
+            setShowPassword(!showPassword)
+          }
         >
           {showPassword ? "Hide" : "Show"}
         </button>
@@ -77,7 +119,7 @@ export default function Login({ goToRegister, goToDashboard }) {
         </button>
 
         <p style={{ textAlign: "center" }}>
-          Don't have an account?{" "}
+          Don't have an account?
           <span
             onClick={goToRegister}
             style={{
