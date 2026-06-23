@@ -36,14 +36,15 @@ export default function Dashboard1({
     }
   };
 
-  const handleDelete = () => {
-    setTask({
-      title: "",
-      date: "",
-      done: false,
-      status: "Pending",
-    });
-  };
+ const handleDelete = () => {
+  setTask({
+    title: "",
+    date: "",
+    time: "",
+    done: false,
+    status: "Pending",
+  });
+};
 
   const handleWorking = () => {
     setTask({
@@ -108,6 +109,27 @@ export default function Dashboard1({
           }}
         />
       </div>
+
+      <div style={{ marginTop: "20px" }}>
+  <label>Select Time</label>
+  <br />
+
+  <input
+    type="time"
+    value={task.time}
+    onChange={(e) =>
+      setTask({
+        ...task,
+        time: e.target.value,
+      })
+    }
+    style={{
+      padding: "10px",
+      marginTop: "10px",
+      width: "220px",
+    }}
+  />
+</div>
 
       <div style={{ marginTop: "20px" }}>
         <label>Enter Reminder</label>

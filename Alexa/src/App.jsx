@@ -8,11 +8,24 @@ function App() {
   const [page, setPage] = useState("login");
 
   const [task, setTask] = useState({
-    title: "React Project",
+    title: "",
     date: "",
+    time: "",
     done: false,
     status: "Pending",
   });
+
+  const goToDashboard1 = () => {
+    setTask({
+      title: "",
+      date: "",
+      time: "",
+      done: false,
+      status: "Pending",
+    });
+
+    setPage("dashboard1");
+  };
 
   return (
     <>
@@ -30,7 +43,7 @@ function App() {
       {page === "dashboard" && (
         <Dashboard
           task={task}
-          goToDashboard1={() => setPage("dashboard1")}
+          goToDashboard1={goToDashboard1}
         />
       )}
 

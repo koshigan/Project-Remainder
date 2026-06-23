@@ -75,6 +75,10 @@ export default function Dashboard({ task, goToDashboard1 }) {
               <strong>Date:</strong>{" "}
               {task.date || "Not Selected"}
             </p>
+            <p>
+              <strong>Time:</strong>{" "}
+              {task.time || "Not Selected"}
+            </p>
 
             <p>
               <strong>Status:</strong>{" "}

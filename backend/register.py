@@ -5,9 +5,7 @@ register_bp = Blueprint("register", __name__)
 
 @register_bp.route("/register", methods=["POST"])
 def register():
-
     data = request.get_json()
-
     email = data.get("email")
     password = data.get("password")
 
