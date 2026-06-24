@@ -3,7 +3,6 @@ from db import reminders
 
 reminder_bp = Blueprint("reminder", __name__)
 
-# Add Reminder
 @reminder_bp.route("/add-reminder", methods=["POST"])
 def add_reminder():
 
@@ -22,7 +21,6 @@ def add_reminder():
     })
 
 
-# Get All Reminders
 @reminder_bp.route("/reminders", methods=["GET"])
 def get_reminders():
 
@@ -35,7 +33,6 @@ def get_reminders():
     return jsonify(data)
 
 
-# Update Reminder
 @reminder_bp.route("/update-reminder", methods=["PUT"])
 def update_reminder():
 
@@ -58,7 +55,6 @@ def update_reminder():
     })
 
 
-# Delete Reminder
 @reminder_bp.route("/delete-reminder/<title>", methods=["DELETE"])
 def delete_reminder(title):
 

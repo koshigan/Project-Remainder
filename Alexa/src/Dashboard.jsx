@@ -1,6 +1,24 @@
 import React from "react";
 
-export default function Dashboard({ task, goToDashboard1 }) {
+export default function Dashboard({
+  task,
+  setTask,
+  goToDashboard1,
+}) {
+  const handleEdit = () => {
+    const newTitle = prompt(
+      "Edit Reminder",
+      task.title
+    );
+
+    if (newTitle !== null && newTitle !== "") {
+      setTask({
+        ...task,
+        title: newTitle,
+      });
+    }
+  };
+
   return (
     <div
       style={{
@@ -9,6 +27,7 @@ export default function Dashboard({ task, goToDashboard1 }) {
         padding: "20px",
       }}
     >
+      
       <div
         style={{
           display: "flex",
@@ -21,11 +40,12 @@ export default function Dashboard({ task, goToDashboard1 }) {
         <h3>Welcome, Paul 👋</h3>
       </div>
 
-      {/* Cards */}
+      
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
+          gridTemplateColumns:
+            "repeat(auto-fit,minmax(200px,1fr))",
           gap: "20px",
         }}
       >
@@ -41,20 +61,21 @@ export default function Dashboard({ task, goToDashboard1 }) {
 
         <div style={cardStyle}>
           <h2>
-            {task.title && !task.done ? 0 : 0}
+            {task.title && !task.done ? 1 : 0}
           </h2>
           <p>Pending</p>
         </div>
       </div>
 
-      {/* Reminder Details */}
+      
       <div
         style={{
           marginTop: "30px",
           background: "white",
           padding: "20px",
           borderRadius: "10px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          boxShadow:
+            "0 2px 8px rgba(0,0,0,0.1)",
         }}
       >
         <h2>Reminder Details</h2>
@@ -75,6 +96,7 @@ export default function Dashboard({ task, goToDashboard1 }) {
               <strong>Date:</strong>{" "}
               {task.date || "Not Selected"}
             </p>
+
             <p>
               <strong>Time:</strong>{" "}
               {task.time || "Not Selected"}
@@ -88,13 +110,27 @@ export default function Dashboard({ task, goToDashboard1 }) {
                 ? "✅ Done"
                 : "⏳ Pending"}
             </p>
+
+            <button
+              onClick={handleEdit}
+              style={{
+                backgroundColor: "orange",
+                color: "white",
+                border: "none",
+                padding: "10px 15px",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              ✏️ Edit
+            </button>
           </div>
         ) : (
           <p>No Reminder Available</p>
         )}
       </div>
 
-      {/* Add Button */}
+    
       <button
         onClick={goToDashboard1}
         style={{
@@ -109,7 +145,8 @@ export default function Dashboard({ task, goToDashboard1 }) {
           color: "white",
           fontSize: "35px",
           cursor: "pointer",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+          boxShadow:
+            "0 4px 10px rgba(0,0,0,0.2)",
         }}
       >
         +
