@@ -8,8 +8,6 @@ from reminder import reminder_bp
 
 app = Flask(__name__)
 CORS(app)
-
-# Email Configuration
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
