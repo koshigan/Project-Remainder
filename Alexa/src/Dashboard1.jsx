@@ -1,20 +1,53 @@
-import React from "react";
 import axios from "axios";
+
+const API_BASE = "http://localhost:5000";
 
 export default function Dashboard1({
   task,
   setTask,
+  userEmail,
   goBack,
 }) {
+  const emptyTask = {
+    title: "",
+    date: "",
+    time: "",
+    done: false,
+    status: "Pending",
+  };
+
   const handleSave = async () => {
+    if (!task.title.trim()) {
+      alert("Please enter a reminder");
+      return;
+    }
+
+    if (!userEmail) {
+      alert("Please login again");
+      return;
+    }
+
     try {
-      const res = await axios.post(
-        "http://localhost:5000/add-reminder",
-        task
-      );
+      const payload = {
+        ...task,
+        user_email: userEmail,
+      };
+
+      const res = task._id
+        ? await axios.put(`${API_BASE}/update-reminder`, payload)
+        : await axios.post(`${API_BASE}/add-reminder`, payload);
 
       if (res.data.success) {
-        alert("Reminder Saved");
+        if (res.data._id) {
+          setTask({
+            ...payload,
+            _id: res.data._id,
+          });
+        }
+
+        alert(task._id ? "Reminder Updated" : "Reminder Saved");
+      } else {
+        alert(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -36,14 +69,17 @@ export default function Dashboard1({
     }
   };
 
- const handleDelete = () => {
-  setTask({
-    title: "",
-    date: "",
-    time: "",
-    done: false,
-    status: "Pending",
-  });
+ const handleDelete = async () => {
+  try {
+    if (task._id) {
+      await axios.delete(`${API_BASE}/delete-reminder/${task._id}`);
+    }
+
+    setTask(emptyTask);
+  } catch (error) {
+    console.log(error);
+    alert("Error Deleting Reminder");
+  }
 };
 
   const handleWorking = () => {

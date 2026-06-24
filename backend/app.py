@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_mail import Mail
-
+from emailer import mail
 from login import login_bp
 from register import register_bp
 from reminder import reminder_bp
@@ -11,10 +11,10 @@ CORS(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "yourgmail@gmail.com"
-app.config["MAIL_PASSWORD"] = "your_app_password"
+app.config["MAIL_USERNAME"] = "remaindercall@gmail.com"
+app.config["MAIL_PASSWORD"] = "Remainder@123"
 
-mail = Mail(app)
+mail.init_app(app)
 
 app.register_blueprint(login_bp)
 app.register_blueprint(register_bp)

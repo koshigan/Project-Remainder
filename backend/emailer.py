@@ -2,21 +2,24 @@ from flask_mail import Mail, Message
 
 mail = Mail()
 
-def send_reminder_email(app, receiver_email, title, date):
+def send_reminder_email(app, receiver_email, title, reminder_date):
 
     with app.app_context():
+
         msg = Message(
             subject="Reminder Notification",
-            sender="yourgmail@gmail.com",
+            sender=app.config["MAIL_USERNAME"],
             recipients=[receiver_email]
         )
 
         msg.body = f"""
 Hello,
 
-Reminder: {title}
+This is a reminder for your task.
 
-Date: {date}
+Title : {title}
+
+Date : {reminder_date}
 
 Don't forget your task.
 

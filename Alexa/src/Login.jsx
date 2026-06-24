@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export default function Login({
@@ -26,11 +26,11 @@ export default function Login({
 
       if (res.data.success) {
         alert("Login Successful");
-        goToDashboard();
+        goToDashboard(email);
       } else {
         alert(res.data.message);
       }
-    } catch (error) {
+    } catch {
       alert("Server Error");
     }
   };

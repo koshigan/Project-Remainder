@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export default function Register({ goToLogin }) {
@@ -23,7 +23,7 @@ export default function Register({ goToLogin }) {
       } else {
         alert(res.data.message);
       }
-    } catch (error) {
+    } catch {
       alert("Server Error");
     }
   };
