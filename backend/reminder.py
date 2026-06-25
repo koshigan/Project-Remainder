@@ -3,6 +3,8 @@ from db import reminders
 
 reminder_bp = Blueprint("reminder", __name__)
 
+
+# Add Reminder
 @reminder_bp.route("/add-reminder", methods=["POST"])
 def add_reminder():
 
@@ -21,6 +23,7 @@ def add_reminder():
     })
 
 
+# Get All Reminders
 @reminder_bp.route("/reminders", methods=["GET"])
 def get_reminders():
 
@@ -33,15 +36,19 @@ def get_reminders():
     return jsonify(data)
 
 
+# Update Reminder
 @reminder_bp.route("/update-reminder", methods=["PUT"])
 def update_reminder():
 
     data = request.get_json()
 
     reminders.update_one(
-        {"title": data["title"]},
+        {
+            "title": data["title"]
+        },
         {
             "$set": {
+                "title": data["newTitle"],      # Update Title
                 "date": data["date"],
                 "done": data["done"],
                 "status": data["status"]
@@ -51,10 +58,11 @@ def update_reminder():
 
     return jsonify({
         "success": True,
-        "message": "Reminder Updated"
+        "message": "Reminder Updated Successfully"
     })
 
 
+# Delete Reminder
 @reminder_bp.route("/delete-reminder/<title>", methods=["DELETE"])
 def delete_reminder(title):
 
@@ -64,5 +72,5 @@ def delete_reminder(title):
 
     return jsonify({
         "success": True,
-        "message": "Reminder Deleted"
+        "message": "Reminder Deleted Successfully"
     })
